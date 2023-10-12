@@ -17,6 +17,10 @@ issue: <https://github.com/hashicorp/vault/issues/4167>
 
 ## Setting up the project
 
+Follow the steps below to set up the project.
+
+### Environment Variables
+
 create a `.env` file in the root directory and add the following:
 
 ```sh
@@ -27,6 +31,14 @@ DB_URL="host=localhost user=gorm password=gorm dbname=gorm port=5432 sslmode=dis
 `PORT` is the port where the API will run (default: 8080). You can change it if you want.
 
 `DB_URL` is the connection string for the database. Change it according to your database credentials.
+
+### Database Migration
+
+Run the following command in the root directory:
+
+```sh
+go run .\migrate\migrate.go
+```
 
 ## Running the API with CompileDaemon
 
