@@ -50,6 +50,10 @@ go run .\migrate\migrate.go
 
 ## Running the API with CompileDaemon
 
+CompileDaemon is a tool for running Go applications in the background, refreshing whenever it is modified.
+
+Run the `CompileDaemon` command pointing to the module name in the [`go.mod`](./go.mod) file
+
 ```sh
 CompileDaemon -command="./go-rest-api"
 ```
@@ -58,7 +62,9 @@ You can see the output in the terminal and you can kill the process with `Ctrl +
 
 ---
 
-## Request
+## Testing
+
+You can use [Postman](https://www.postman.com/) to test the API.
 
 Base address: `http://localhost:{port}/`
 
@@ -68,8 +74,8 @@ ps: Check the port in `.env` file and feel free to change it.
 
 ## Endpoints
 
-- [ ] [GET] `~/posts`
-- [ ] [GET] `~/posts/{id}`
-- [ ] [POST] `~/posts`
-- [ ] [PUT] `~/posts/{id}`
-- [ ] [DELETE] `~/posts/{id}`
+- [x] [GET] `~/posts`
+- [x] [GET] `~/posts/{id}`
+- [x] [POST] `~/posts`
+- [x] [PUT] `~/posts/{id}`
+- [x] [DELETE] `~/posts/{id}`
