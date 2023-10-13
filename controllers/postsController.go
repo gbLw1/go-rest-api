@@ -1,11 +1,20 @@
 package controllers
 
 import (
+	"errors"
 	"go-rest-api/initializers"
 	"go-rest-api/models"
 
 	"github.com/gin-gonic/gin"
 )
+
+func validateRequestArgs(args models.Post) (*models.Post, error) {
+	if args.Title == "" || args.Body == "" {
+		return nil, errors.New("title and body cannot be empty")
+	}
+
+	return &args, nil
+}
 
 func PostsGetAll(c *gin.Context) {
 	var posts []models.Post
@@ -20,10 +29,10 @@ func PostsGetById(c *gin.Context) {
 	id := c.Param("id")
 
 	var post models.Post
-	result := initializers.DB.First(&post, id)
-
-	if result.Error != nil {
-		c.Status(404)
+	if err := initializers.DB.First(&post, id).Error; err != nil {
+		c.JSON(404, gin.H{
+			"error": "Post not found",
+		})
 		return
 	}
 
@@ -38,16 +47,29 @@ func PostsCreate(c *gin.Context) {
 		Body  string
 	}
 
-	c.Bind(&postBodyArgs)
+	// Parse request body
+	if err := c.Bind(&postBodyArgs); err != nil {
+		c.JSON(400, "Request body isn't a valid JSON")
+		return
+	}
 
-	post := models.Post{
+	// Validate request body
+	post, err := validateRequestArgs(models.Post{
 		Title: postBodyArgs.Title,
 		Body:  postBodyArgs.Body,
+	})
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
 	}
-	result := initializers.DB.Create(&post)
 
-	if result.Error != nil {
-		c.Status(400)
+	// Create post
+	if err := initializers.DB.Create(post).Error; err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
 		return
 	}
 
@@ -59,25 +81,39 @@ func PostsCreate(c *gin.Context) {
 func PostsUpdate(c *gin.Context) {
 	id := c.Param("id")
 
+	// Check if post exists
+	var post models.Post
+	if err := initializers.DB.First(&post, id).Error; err != nil {
+		c.JSON(404, gin.H{
+			"error": "Post not found",
+		})
+		return
+	}
+
+	// Parse request body
 	var putBodyArgs struct {
 		Title string
 		Body  string
 	}
-
-	c.Bind(&putBodyArgs)
-
-	var post models.Post
-	result := initializers.DB.First(&post, id)
-
-	if result.Error != nil {
-		c.Status(404)
+	if err := c.Bind(&putBodyArgs); err != nil {
+		c.JSON(400, "Request body isn't a valid JSON")
 		return
 	}
 
-	initializers.DB.Model(&post).Updates(&models.Post{
+	// Validate request body
+	postUpdate, err := validateRequestArgs(models.Post{
 		Title: putBodyArgs.Title,
 		Body:  putBodyArgs.Body,
 	})
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	// Update post
+	initializers.DB.Model(&post).Updates(postUpdate)
 
 	c.JSON(200, gin.H{
 		"post": post,
@@ -88,10 +124,10 @@ func PostsDelete(c *gin.Context) {
 	id := c.Param("id")
 
 	var post models.Post
-	result := initializers.DB.First(&post, id)
-
-	if result.Error != nil {
-		c.Status(404)
+	if err := initializers.DB.First(&post, id).Error; err != nil {
+		c.JSON(404, gin.H{
+			"error": "Post not found",
+		})
 		return
 	}
 
