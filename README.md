@@ -6,10 +6,10 @@ A simple REST API written in Go.
 
 ## Dependencies
 
-- [CompileDaemon](https://github.com/githubnemo/CompileDaemon)
-- [GoDotEnv](https://github.com/joho/godotenv)
-- [Gin Web Framework](https://gin-gonic.com/)
-- [Gorm](https://gorm.io/)
+- [CompileDaemon](https://github.com/githubnemo/CompileDaemon) - Hot reload
+- [GoDotEnv](https://github.com/joho/godotenv) - Environment variables
+- [Gin Web Framework](https://gin-gonic.com/) - Web framework
+- [Gorm](https://gorm.io/) - Database ORM
 
 ---
 
@@ -38,27 +38,15 @@ DB_URL="host=localhost user=gorm password=gorm dbname=gorm port=5432 sslmode=dis
 
 `DB_URL` is the connection string for the database. Change it according to your database credentials.
 
-### Database Migration
-
-Run the following command in the root directory:
-
-```sh
-go run .\migrate\migrate.go
-```
-
 ---
 
-## Running the API with CompileDaemon
+## Run
 
-CompileDaemon is a tool for running Go applications in the background, refreshing whenever it is modified.
-
-Run the `CompileDaemon` command pointing to the module name in the [`go.mod`](./go.mod) file
+Run the following command to start the server:
 
 ```sh
-CompileDaemon -command="./go-rest-api"
+go run main.go
 ```
-
-You can see the output in the terminal and you can kill the process with `Ctrl + C` at any time.
 
 ---
 
