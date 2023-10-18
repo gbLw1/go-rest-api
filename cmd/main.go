@@ -1,8 +1,8 @@
 package main
 
 import (
-	"go-rest-api/controllers"
-	"go-rest-api/initializers"
+	"go-rest-api/pkg/controllers"
+	"go-rest-api/pkg/initializers"
 
 	"github.com/gin-gonic/gin"
 )

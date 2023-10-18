@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"errors"
-	"go-rest-api/initializers"
-	"go-rest-api/models"
+	"go-rest-api/pkg/initializers"
+	"go-rest-api/pkg/models"
 
 	"github.com/gin-gonic/gin"
 )

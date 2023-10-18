@@ -1,7 +1,7 @@
 package initializers
 
 import (
-	"go-rest-api/models"
+	"go-rest-api/pkg/models"
 	"log"
 )
 

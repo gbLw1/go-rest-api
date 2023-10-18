@@ -45,7 +45,7 @@ DB_URL="host=localhost user=gorm password=gorm dbname=gorm port=5432 sslmode=dis
 Run the following command to start the server:
 
 ```sh
-go run main.go
+go run ./cmd/main.go
 ```
 
 ---
