@@ -2,10 +2,11 @@ package controllers
 
 import (
 	"errors"
-	"go-rest-api/pkg/initializers"
-	"go-rest-api/pkg/models"
 
 	"github.com/gin-gonic/gin"
+
+	"go-rest-api/pkg/initializers"
+	"go-rest-api/pkg/models"
 )
 
 func validateRequestArgs(args models.Post) (*models.Post, error) {
