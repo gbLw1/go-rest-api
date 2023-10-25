@@ -17,7 +17,7 @@ This project is a secure REST API with JWT authentication, storing access tokens
 
 ## Database
 
-Tried with SQL Server but can't connect to 1433 using TelNet so I use [PostgreSQL](https://www.elephantsql.com/).
+Tried with SQL Server but can't connect to port 1433 using TelNet so I use [PostgreSQL](https://www.elephantsql.com/)
 
 issue: <https://github.com/hashicorp/vault/issues/4167>
 
